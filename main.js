@@ -1,60 +1,64 @@
-// ======= Edward IA — Chat Profissional =======
+const chatForm = document.querySelector("#chat-form");
+const chatInput = document.querySelector("#chat-input");
+const chatBox = document.querySelector("#chat-box");
+const clearBtn = document.querySelector("#clear-btn");
 
-const chatBox = document.getElementById("chat");
-const input = document.getElementById("input");
-const form = document.getElementById("form");
+async function sendMessage(message) {
+  addMessage("user", message);
+  chatInput.value = "";
 
-function addMessage(text, sender = "bot") {
-  const msg = document.createElement("div");
-  msg.className = sender;
-  chatBox.appendChild(msg);
-  typeEffect(msg, text);
+  const typing = addMessage("bot", "Digitando...");
+  typing.classList.add("typing");
+
+  try {
+    const response = await fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+    const data = await response.json();
+
+    typing.remove();
+    addMessage("bot", data.reply, true);
+  } catch (error) {
+    typing.remove();
+    addMessage("bot", "⚠️ Erro ao se conectar com o servidor.");
+  }
+}
+
+function addMessage(sender, text, allowCopy = false) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message", sender);
+
+  const bubble = document.createElement("div");
+  bubble.classList.add("bubble");
+  bubble.innerHTML = text.replace(/\n/g, "<br>");
+  messageDiv.appendChild(bubble);
+
+  if (sender === "bot" && allowCopy) {
+    const copyBtn = document.createElement("button");
+    copyBtn.textContent = "Copiar";
+    copyBtn.classList.add("copy-btn");
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(text);
+      copyBtn.textContent = "Copiado!";
+      setTimeout(() => (copyBtn.textContent = "Copiar"), 1500);
+    };
+    messageDiv.appendChild(copyBtn);
+  }
+
+  chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
+  return messageDiv;
 }
 
-// Efeito de digitação com cursor piscando
-function typeEffect(element, text, speed = 20) {
-  let index = 0;
-  const cursor = document.createElement("span");
-  cursor.classList.add("typing");
-  element.appendChild(cursor);
-
-  const interval = setInterval(() => {
-    if (index < text.length) {
-      element.insertBefore(document.createTextNode(text.charAt(index)), cursor);
-      index++;
-    } else {
-      clearInterval(interval);
-      cursor.remove();
-    }
-  }, speed);
-}
-
-// Função simulada (sem API por enquanto)
-async function askEdward(question) {
-  addMessage("Um momento, analisando com inteligência...", "bot");
-
-  setTimeout(() => {
-    const respostas = [
-      "Entendido! Posso te ajudar em qualquer assunto, desde tecnologia até estudos.",
-      "Excelente pergunta! Eu explico de forma simples e clara.",
-      "Aqui está uma resposta detalhada, como um verdadeiro especialista explicaria.",
-      "Adorei isso! Vamos resolver juntos 😎",
-    ];
-    const resposta = respostas[Math.floor(Math.random() * respostas.length)];
-    addMessage(resposta, "bot");
-  }, 1000);
-}
-
-// Enviar mensagem
-form.addEventListener("submit", (e) => {
+chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const msg = input.value.trim();
-  if (!msg) return;
-  addMessage(msg, "user");
-  input.value = "";
-  askEdward(msg);
+  const message = chatInput.value.trim();
+  if (message) sendMessage(message);
 });
 
-// Mensagem inicial
-addMessage("👋 Olá! Sou o Edward IA — seu assistente inteligente e moderno. O que você quer aprender hoje?");
+clearBtn.addEventListener("click", () => {
+  chatBox.innerHTML = "";
+  addMessage("bot", "Histórico limpo. Como posso te ajudar agora?");
+});
