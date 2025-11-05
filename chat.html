@@ -1,228 +1,92 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Edward IA — Seu Assistente de Luxo</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Edward IA — Chat</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/4712/4712139.png">
 <style>
-  :root {
-    --azul: #003366;
-    --azul-claro: #007BFF;
-    --fundo: #ffffff;
-    --texto: #001733;
+  :root{
+    --bg:#ffffff;
+    --accent:#003366;
+    --accent-2:#007BFF;
+    --muted:#6b7b8f;
+    --bubble-user:#007BFF;
+    --bubble-bot:#e9f4ff;
   }
-
-  body {
-    background: var(--fundo);
-    color: var(--texto);
-    font-family: "Poppins", Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Poppins,Inter,system-ui,Arial;color:var(--accent);background:var(--bg)}
+  .app{
+    display:flex;flex-direction:column;height:100vh;
   }
-
-  header {
-    text-align: center;
-    padding: 25px;
-    background: var(--azul);
-    color: white;
-    font-size: 1.2rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  header{
+    background:linear-gradient(90deg,var(--accent),#004a8f);color:#fff;padding:18px 20px;display:flex;align-items:center;gap:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
   }
-
-  header h1 {
-    margin: 0;
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
+  header .brand{font-weight:700;font-size:1.15rem}
+  header .subtitle{opacity:0.9;font-size:0.95rem}
+  main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  /* chat area */
+  .chat-frame{flex:1;display:flex;flex-direction:column;padding:18px;gap:12px;overflow:hidden}
+  #chatList{flex:1;overflow:auto;padding-right:8px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:86%;padding:12px 14px;border-radius:12px;line-height:1.5;word-break:break-word}
+  .msg.user{align-self:flex-end;background:linear-gradient(120deg,var(--bubble-user),#005bb5);color:#fff;border:1px solid rgba(0,0,0,0.06)}
+  .msg.bot{align-self:flex-start;background:var(--bubble-bot);border:1px solid #cfe6ff;color:var(--accent)}
+  .meta{font-size:12px;color:var(--muted);margin-top:6px}
+  .controls{display:flex;gap:8px;align-items:center;padding:12px;border-top:1px solid #eef3fb;background:#fbfdff}
+  .input{
+    flex:1;display:flex;gap:8px;align-items:center;
   }
-
-  header p {
-    margin: 5px 0 0;
-    font-size: 0.95rem;
-    opacity: 0.9;
+  input[type="text"]{flex:1;padding:12px;border-radius:10px;border:1px solid #d8e6ff;font-size:15px;outline:none}
+  button{background:var(--accent-2);color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+  button.secondary{background:#f1f5fb;color:var(--accent);border:1px solid #dbeafc}
+  .small{padding:8px 10px;font-size:14px}
+  .copy-btn{background:transparent;border:none;color:var(--accent-2);cursor:pointer;font-weight:600;margin-left:8px}
+  .typing{font-style:italic;opacity:0.85}
+  .toolbar{display:flex;gap:8px;align-items:center}
+  .toolbar select{padding:8px;border-radius:8px;border:1px solid #d8e6ff}
+  .footer-note{font-size:12px;color:var(--muted);text-align:center;padding:10px}
+  /* scroll */
+  #chatList::-webkit-scrollbar{width:8px}
+  #chatList::-webkit-scrollbar-thumb{background:#dbeafc;border-radius:8px}
+  /* responsive */
+  @media(max-width:720px){
+    header{padding:12px}
+    .controls{padding:10px}
   }
-
-  #chatBox {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background: #f9fbff;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bot, .user {
-    margin: 10px 0;
-    padding: 14px 18px;
-    border-radius: 12px;
-    max-width: 85%;
-    line-height: 1.5;
-    word-wrap: break-word;
-    font-size: 1rem;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .bot {
-    background: #e9f2ff;
-    align-self: flex-start;
-    border: 1px solid #b3daff;
-  }
-
-  .user {
-    background: var(--azul-claro);
-    color: white;
-    align-self: flex-end;
-  }
-
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(6px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
-
-  form {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid #ddd;
-    background: #f1f5fb;
-  }
-
-  input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-    font-size: 1rem;
-  }
-
-  button {
-    background: var(--azul-claro);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    margin-left: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-
-  button:hover {
-    background: #0056b3;
-  }
-
-  footer {
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9rem;
-    color: #555;
-  }
-
-  /* Scrollbar personalizada */
-  #chatBox::-webkit-scrollbar { width: 6px; }
-  #chatBox::-webkit-scrollbar-thumb {
-    background: #b3daff;
-    border-radius: 6px;
-  }
-
-  .copy-btn {
-    background: none;
-    border: none;
-    color: var(--azul-claro);
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.9rem;
-    margin-top: 6px;
-    align-self: flex-start;
-  }
-  .copy-btn:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
+  <div class="app" role="application" aria-label="Edward IA chat">
+    <header>
+      <div class="brand">Edward IA</div>
+      <div class="subtitle">Seu assistente — rápido, preciso e inteligente</div>
+      <div style="margin-left:auto" class="toolbar">
+        <label for="langSelect" style="color:#e9f4ff;font-weight:600;margin-right:6px">Idioma</label>
+        <select id="langSelect" aria-label="Selecionar idioma">
+          <option value="auto">Automático</option>
+          <option value="pt">Português</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+        <button id="clearBtn" class="secondary small" title="Limpar histórico">Limpar</button>
+      </div>
+    </header>
 
-<header>
-  <h1>Edward IA</h1>
-  <p>Seu assistente de luxo — rápido, preciso e com estilo.</p>
-</header>
+    <main>
+      <div class="chat-frame">
+        <div id="chatList" role="log" aria-live="polite"></div>
+        <div class="controls">
+          <div class="input">
+            <input id="userInput" type="text" placeholder="Digite sua pergunta..." aria-label="Mensagem do usuário" autocomplete="off"/>
+            <button id="sendBtn">Enviar</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">© 2025 Edward IA — Desenvolvido por Eduardo Henrique</div>
+    </main>
+  </div>
 
-<div id="chatBox"></div>
-
-<form id="form">
-  <input id="userInput" placeholder="Digite sua pergunta..." autocomplete="off">
-  <button type="submit">Enviar</button>
-</form>
-
-<footer>© 2025 Edward IA • Inteligência Premium</footer>
-
-<script>
-// =================== CONFIGURAÇÃO DO CHAT ===================
-const chatBox = document.getElementById("chatBox");
-const form = document.getElementById("form");
-const input = document.getElementById("userInput");
-
-// Adiciona mensagens no chat
-function addMessage(text, sender = "bot") {
-  const div = document.createElement("div");
-  div.className = sender;
-  div.textContent = text;
-  chatBox.appendChild(div);
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  // Botão de cópia (apenas para respostas da IA)
-  if (sender === "bot") {
-    const copyBtn = document.createElement("button");
-    copyBtn.className = "copy-btn";
-    copyBtn.textContent = "Copiar resposta";
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(text);
-      copyBtn.textContent = "Copiado!";
-      setTimeout(() => (copyBtn.textContent = "Copiar resposta"), 2000);
-    };
-    chatBox.appendChild(copyBtn);
-  }
-}
-
-// IA local simples (sem API)
-function responderPergunta(pergunta) {
-  const texto = pergunta.toLowerCase();
-
-  if (texto.includes("oi") || texto.includes("olá")) {
-    return "Olá! 😄 Eu sou o Edward IA. Como posso te ajudar hoje?";
-  }
-  if (texto.includes("quem é você")) {
-    return "Sou o Edward IA, um assistente de inteligência artificial criado para ajudar você com estudos, ideias e automação.";
-  }
-  if (texto.includes("ajuda") || texto.includes("como usar")) {
-    return "Você pode me fazer qualquer pergunta! Tente por exemplo: 'explique energia solar' ou 'me mostre ideias de negócio online'.";
-  }
-  if (texto.includes("criar site")) {
-    return "Para criar um site, você pode usar plataformas como Netlify, Vercel ou GitHub Pages. Quer que eu te mostre passo a passo?";
-  }
-  if (texto.includes("idioma")) {
-    return "Eu detecto automaticamente o idioma! Você pode escrever em português, inglês, espanhol e muito mais 🌍.";
-  }
-  return "Boa pergunta! 😎 Sou o Edward IA e posso te ajudar em qualquer tema — tecnologia, estudos, criatividade e muito mais.";
-}
-
-// Enviar mensagem
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const pergunta = input.value.trim();
-  if (!pergunta) return;
-
-  addMessage(pergunta, "user");
-  input.value = "";
-
-  setTimeout(() => {
-    const resposta = responderPergunta(pergunta);
-    addMessage(resposta, "bot");
-  }, 500);
-});
-
-// Mensagem inicial
-addMessage("👋 Bem-vindo ao Edward IA! Pergunte o que quiser — eu estou pronto para ajudar.", "bot");
-</script>
+  <script src="main.js"></script>
 </body>
 </html>
