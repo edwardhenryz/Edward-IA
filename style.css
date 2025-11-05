@@ -1,69 +1,134 @@
-:root{
-  --bg: #fff;
-  --panel: #f7f5f3;
-  --accent: #b8892a; /* dourado */
-  --dark: #111;
-  --muted: #666;
-  --shadow: 0 6px 20px rgba(17,17,17,0.12);
-  --radius: 12px;
-  --gap: 14px;
-  font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
-}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:linear-gradient(180deg,#fff,#fcfbfa);color:var(--dark)}
-.topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 22px;border-bottom:1px solid #eee;background:#fff;position:sticky;top:0;z-index:30;
-}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(145deg,#fff,#f2efe9);box-shadow:var(--shadow);border:2px solid rgba(184,137,42,0.06)}
-.brand h1{font-size:1.35rem;margin:0;color:var(--dark);letter-spacing:0.2px}
-.toplinks{display:flex;align-items:center;gap:10px}
-.toplinks a, .toplinks button{background:transparent;border:0;padding:8px 12px;border-radius:8px;cursor:pointer;color:var(--muted);text-decoration:none}
-.toplinks .platform-link{background:var(--accent);color:#fff;padding:8px 12px;font-weight:600}
-.container{max-width:920px;margin:26px auto;padding:0 18px}
-.chat-area{
-  background:linear-gradient(180deg,#fff,#fffcf8);
-  border-radius:var(--radius);padding:18px;height:56vh;overflow:auto;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,0.03);
-  display:flex;flex-direction:column;gap:12px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #222;
+  overflow-x: hidden;
 }
 
-/* mensagens */
-.msg{max-width:78%;padding:12px 14px;border-radius:12px;line-height:1.45}
-.msg.user{align-self:flex-end;background:#111;color:#fff;border:1px solid rgba(255,255,255,0.04);}
-.msg.bot{align-self:flex-start;background:var(--panel);color:var(--dark);border:1px solid rgba(0,0,0,0.04);font-weight:500}
-.msg .meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-bottom:6px}
-.msg .txt{white-space:pre-wrap;word-break:break-word}
-
-/* botão copiar por mensagem */
-.msg .row-actions{margin-top:8px;display:flex;gap:8px}
-.row-actions button{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px}
-
-/* composer */
-.composer{display:flex;gap:12px;margin-top:14px}
-.composer input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid #e6e2db;background:#fff;outline:none}
-.composer button{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:12px;cursor:pointer}
-
-/* controls */
-.controls{display:flex;gap:10px;align-items:center;margin-top:12px;color:var(--muted)}
-.controls select, .controls button{padding:8px 10px;border-radius:8px;border:1px solid #eee;background:#fff;cursor:pointer}
-
-/* efeitos de fundo discreto (movimento suave) */
-body::before{
-  content:"";position:fixed;inset:0;background:
-  radial-gradient(800px 400px at 10% 20%, rgba(184,137,42,0.03), transparent 8%),
-  radial-gradient(600px 300px at 90% 80%, rgba(188,139,46,0.02), transparent 8%);
-  pointer-events:none;z-index:1;transform:translateZ(0);
-  animation: drift 14s ease-in-out infinite;
-}
-@keyframes drift{
-  0%{transform:translateY(0) translateX(0)}
-  50%{transform:translateY(-12px) translateX(10px)}
-  100%{transform:translateY(0) translateX(0)}
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #fff, #f7f2e9, #e6d3a3);
+  animation: moveBg 10s ease-in-out infinite alternate;
+  z-index: -1;
 }
 
-/* responsivo */
-@media (max-width:640px){
-  .chat-area{height:58vh;padding:12px}
-  .toplinks .platform-link{display:none}
+@keyframes moveBg {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(180, 150, 80, 0.2);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  background: linear-gradient(135deg, #b38b2f, #e4c065);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+h1 {
+  margin: 0;
+  color: #b38b2f;
+}
+
+#chatbox {
+  background: #fff;
+  border: 1px solid #e8d8b0;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  height: 300px;
+  overflow-y: auto;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+#userInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e0c98f;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+#sendBtn {
+  background: #b38b2f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#sendBtn:hover {
+  background: #d4b65a;
+}
+
+.options {
+  margin-top: 10px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.options a {
+  color: #b38b2f;
+  text-decoration: none;
+}
+
+.examples h3, .platforms h3 {
+  color: #b38b2f;
+  margin-top: 30px;
+}
+
+.example {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #d4b65a;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.example.dark {
+  background: #222;
+}
+
+.example:hover {
+  opacity: 0.9;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
 }
