@@ -1,45 +1,60 @@
-const chatbox = document.getElementById("chatbox");
-const input = document.getElementById("userInput");
-const sendBtn = document.getElementById("sendBtn");
-const langSelect = document.getElementById("language");
+// ======= Edward IA — Chat Profissional =======
 
-async function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
+const chatBox = document.getElementById("chat");
+const input = document.getElementById("input");
+const form = document.getElementById("form");
 
-  appendMessage("user", text);
+function addMessage(text, sender = "bot") {
+  const msg = document.createElement("div");
+  msg.className = sender;
+  chatBox.appendChild(msg);
+  typeEffect(msg, text);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Efeito de digitação com cursor piscando
+function typeEffect(element, text, speed = 20) {
+  let index = 0;
+  const cursor = document.createElement("span");
+  cursor.classList.add("typing");
+  element.appendChild(cursor);
+
+  const interval = setInterval(() => {
+    if (index < text.length) {
+      element.insertBefore(document.createTextNode(text.charAt(index)), cursor);
+      index++;
+    } else {
+      clearInterval(interval);
+      cursor.remove();
+    }
+  }, speed);
+}
+
+// Função simulada (sem API por enquanto)
+async function askEdward(question) {
+  addMessage("Um momento, analisando com inteligência...", "bot");
+
+  setTimeout(() => {
+    const respostas = [
+      "Entendido! Posso te ajudar em qualquer assunto, desde tecnologia até estudos.",
+      "Excelente pergunta! Eu explico de forma simples e clara.",
+      "Aqui está uma resposta detalhada, como um verdadeiro especialista explicaria.",
+      "Adorei isso! Vamos resolver juntos 😎",
+    ];
+    const resposta = respostas[Math.floor(Math.random() * respostas.length)];
+    addMessage(resposta, "bot");
+  }, 1000);
+}
+
+// Enviar mensagem
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const msg = input.value.trim();
+  if (!msg) return;
+  addMessage(msg, "user");
   input.value = "";
-
-  const lang = langSelect.value;
-
-  try {
-    const res = await fetch("/.netlify/functions/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, lang })
-    });
-
-    const data = await res.json();
-    appendMessage("bot", data.reply);
-  } catch (err) {
-    appendMessage("bot", "⚠️ Ocorreu um erro ao se comunicar com o servidor.");
-  }
-}
-
-function appendMessage(sender, text) {
-  const div = document.createElement("div");
-  div.classList.add(sender === "user" ? "msg-user" : "msg-bot");
-  div.innerText = text;
-  chatbox.appendChild(div);
-  chatbox.scrollTop = chatbox.scrollHeight;
-}
-
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
-
-document.querySelectorAll(".example").forEach(btn => {
-  btn.addEventListener("click", () => {
-    input.value = btn.textContent;
-    sendMessage();
-  });
+  askEdward(msg);
 });
+
+// Mensagem inicial
+addMessage("👋 Olá! Sou o Edward IA — seu assistente inteligente e moderno. O que você quer aprender hoje?");
