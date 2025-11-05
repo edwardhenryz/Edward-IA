@@ -1,127 +1,155 @@
-/* ======= Edward IA — Estilo Premium Branco & Dourado ======= */
+:root {
+  --gold: #d4af37;
+  --white: #f9f9f9;
+  --black: #1a1a1a;
+  --gray: #e6e6e6;
+}
 
 body {
+  background: linear-gradient(180deg, var(--white), #f0f0f0);
+  color: var(--black);
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
-  color: #2b2b2b;
-  height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
 }
 
 .container {
   width: 90%;
-  max-width: 900px;
-  background: #ffffffcc;
-  backdrop-filter: blur(12px);
-  border-radius: 18px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2b10f;
+  max-width: 700px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  margin-top: 40px;
+  border: 1px solid var(--gold);
 }
 
 header {
+  background: var(--gold);
+  color: white;
   text-align: center;
-  padding: 30px 20px;
-  background: linear-gradient(90deg, #fff7d1, #fbe68c);
-  color: #3e3e3e;
+  padding: 15px 0;
+  font-size: 1.4rem;
   font-weight: 600;
-  font-size: 1.6rem;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #e2b10f;
+  letter-spacing: 1px;
 }
 
-#chat {
-  height: 480px;
+.chat-box {
+  height: 60vh;
   overflow-y: auto;
   padding: 20px;
-  background: #fffdf5;
-}
-
-.user, .bot {
-  max-width: 80%;
-  padding: 12px 18px;
-  border-radius: 16px;
-  margin: 10px 0;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  line-height: 1.6;
-  font-size: 1rem;
-  animation: fadeIn 0.4s ease;
-}
-
-.user {
-  background: linear-gradient(145deg, #ffe680, #f2c84b);
-  color: #333;
-  margin-left: auto;
-  border: 1px solid #e2b10f;
-}
-
-.bot {
-  background: #fff;
-  border: 1px solid #f0d568;
-  box-shadow: 0 2px 10px rgba(226, 177, 15, 0.1);
-  color: #2a2a2a;
-}
-
-/* Efeito digitando */
-.typing {
-  display: inline-block;
-  border-right: 2px solid #e2b10f;
-  animation: blink 0.8s infinite;
-}
-
-/* Input */
-#form {
   display: flex;
-  border-top: 2px solid #f3e5b0;
-  background: #fffaf0;
+  flex-direction: column;
+  gap: 15px;
+  scroll-behavior: smooth;
 }
 
-#input {
-  flex: 1;
-  border: none;
-  padding: 16px;
-  font-size: 1rem;
-  outline: none;
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: fadeIn 0.3s ease;
+}
+
+.message.user {
+  align-self: flex-end;
+}
+
+.message.bot {
+  align-self: flex-start;
+}
+
+.bubble {
+  background: var(--gray);
+  padding: 12px 16px;
+  border-radius: 15px;
+  line-height: 1.4;
+  font-size: 15px;
+}
+
+.message.user .bubble {
+  background: var(--gold);
+  color: white;
+  font-weight: 500;
+}
+
+.copy-btn {
+  align-self: flex-end;
   background: transparent;
-  color: #333;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: 4px;
+  transition: 0.2s;
+}
+
+.copy-btn:hover {
+  background: var(--gold);
+  color: white;
+}
+
+.typing .bubble {
+  background: var(--gray);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+#chat-form {
+  display: flex;
+  border-top: 1px solid var(--gray);
+  padding: 10px;
+  background: white;
+}
+
+#chat-input {
+  flex: 1;
+  border: 1px solid var(--gray);
+  border-radius: 10px;
+  padding: 10px;
+  outline: none;
+  font-size: 15px;
 }
 
 button {
-  background: linear-gradient(90deg, #f5d142, #e2b10f);
+  background: var(--gold);
+  color: white;
   border: none;
-  color: #333;
-  padding: 16px 26px;
-  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 18px;
+  margin-left: 8px;
   cursor: pointer;
+  font-weight: 600;
   transition: 0.3s;
 }
 
 button:hover {
-  background: linear-gradient(90deg, #e2b10f, #cda50c);
-  transform: translateY(-1px);
+  background: #c09a2d;
 }
 
-/* Animações */
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #e2b10f; }
+#clear-btn {
+  background: #333;
+  color: white;
+}
+
+#clear-btn:hover {
+  background: #555;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Barra de rolagem */
-#chat::-webkit-scrollbar {
-  width: 6px;
-}
-#chat::-webkit-scrollbar-thumb {
-  background: #e2b10f66;
-  border-radius: 6px;
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
