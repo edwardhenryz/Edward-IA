@@ -1,40 +1,75 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Contato — Edward IA</title>
-  <style>
-    body{font-family:Inter,Arial;background:#fff;color:#111;padding:24px}
-    .box{max-width:720px;margin:24px auto;padding:18px;border-radius:10px;border:1px solid #efe6d0;background:#fff}
-    label{display:block;margin-top:8px;font-weight:600}
-    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:6px}
-    button{margin-top:10px;padding:10px 14px;border-radius:8px;background:#c69c39;border:none;color:#fff}
-    a{color:#c69c39;text-decoration:none}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contato — Edward IA</title>
+<style>
+  body {
+    background:#fff;
+    color:#001733;
+    font-family:"Poppins",Arial,sans-serif;
+    margin:0;
+    padding:40px 20px;
+    line-height:1.8;
+  }
+  main {
+    max-width:800px;
+    margin:auto;
+  }
+  h1 {
+    text-align:center;
+    color:#003366;
+  }
+  label {
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+  }
+  input, textarea {
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-family:inherit;
+  }
+  button {
+    background:#007BFF;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:6px;
+    margin-top:20px;
+    cursor:pointer;
+    font-weight:bold;
+  }
+  button:hover {
+    background:#0056b3;
+  }
+  a {color:#007BFF;text-decoration:none;}
+  a:hover{text-decoration:underline;}
+</style>
 </head>
 <body>
-  <div class="box">
-    <h1>Contato</h1>
-    <p>Se você precisa de ajuda, parcerias ou quer reportar algo, envie a mensagem abaixo.</p>
+<main>
+  <h1>Entre em Contato</h1>
+  <p>Se você tem dúvidas, sugestões ou deseja parcerias, envie uma mensagem usando o formulário abaixo.</p>
 
-    <form id="contactForm" onsubmit="return false">
-      <label>Nome</label>
-      <input id="nome" required />
-      <label>E-mail</label>
-      <input id="email" type="email" required />
-      <label>Mensagem</label>
-      <textarea id="mensagem" rows="6" required></textarea>
-      <button id="send">Enviar</button>
-    </form>
+  <form action="mailto:eduiacreator@gmail.com" method="post" enctype="text/plain">
+    <label for="name">Nome</label>
+    <input type="text" id="name" name="name" required>
 
-    <p style="margin-top:12px">Voltar para <a href="index.html">Edward IA</a></p>
-  </div>
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required>
 
-  <script>
-    document.getElementById('send').addEventListener('click', ()=>{
-      alert('Obrigado — sua mensagem foi recebida (simulada).');
-      document.getElementById('contactForm').reset();
-    });
-  </script>
+    <label for="message">Mensagem</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+
+    <button type="submit">Enviar Mensagem</button>
+  </form>
+
+  <p style="margin-top:30px;"><a href="/index.html">⬅ Voltar para a página inicial</a></p>
+</main>
 </body>
 </html>
