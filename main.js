@@ -1,64 +1,60 @@
-const chatForm = document.querySelector("#chat-form");
-const chatInput = document.querySelector("#chat-input");
-const chatBox = document.querySelector("#chat-box");
-const clearBtn = document.querySelector("#clear-btn");
+const chatBox = document.getElementById("chatBox");
+const userInput = document.getElementById("userInput");
 
-async function sendMessage(message) {
-  addMessage("user", message);
-  chatInput.value = "";
+// Função para exibir mensagens no chat
+function addMessage(sender, text) {
+  const message = document.createElement("div");
+  message.classList.add("chat-message");
+  message.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  chatBox.appendChild(message);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
 
-  const typing = addMessage("bot", "Digitando...");
-  typing.classList.add("typing");
+// Simulação de digitação com atraso natural
+function typeEffect(text, callback) {
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      chatBox.lastChild.innerHTML += text.charAt(i);
+      i++;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    } else {
+      clearInterval(interval);
+      if (callback) callback();
+    }
+  }, 15);
+}
+
+// Enviar mensagem
+async function sendMessage() {
+  const question = userInput.value.trim();
+  if (question === "") return;
+
+  addMessage("Você", question);
+  userInput.value = "";
+
+  // Mensagem de "digitando..."
+  const typingMessage = document.createElement("div");
+  typingMessage.classList.add("chat-message");
+  typingMessage.innerHTML = "<strong>Edward IA:</strong> ⌛ Digitando...";
+  chatBox.appendChild(typingMessage);
+  chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    const response = await fetch("/.netlify/functions/chat", {
+    const response = await fetch("/.netlify/functions/edward", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ prompt: question }),
     });
+
     const data = await response.json();
+    const reply = data.reply || "Desculpe, houve um erro ao processar sua pergunta.";
 
-    typing.remove();
-    addMessage("bot", data.reply, true);
+    // Substitui a mensagem de digitação pelo texto real
+    typingMessage.innerHTML = `<strong>Edward IA:</strong> `;
+    typeEffect(reply);
+
   } catch (error) {
-    typing.remove();
-    addMessage("bot", "⚠️ Erro ao se conectar com o servidor.");
+    typingMessage.innerHTML = `<strong>Edward IA:</strong> Ocorreu um erro, tente novamente.`;
   }
 }
-
-function addMessage(sender, text, allowCopy = false) {
-  const messageDiv = document.createElement("div");
-  messageDiv.classList.add("message", sender);
-
-  const bubble = document.createElement("div");
-  bubble.classList.add("bubble");
-  bubble.innerHTML = text.replace(/\n/g, "<br>");
-  messageDiv.appendChild(bubble);
-
-  if (sender === "bot" && allowCopy) {
-    const copyBtn = document.createElement("button");
-    copyBtn.textContent = "Copiar";
-    copyBtn.classList.add("copy-btn");
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(text);
-      copyBtn.textContent = "Copiado!";
-      setTimeout(() => (copyBtn.textContent = "Copiar"), 1500);
-    };
-    messageDiv.appendChild(copyBtn);
-  }
-
-  chatBox.appendChild(messageDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
-  return messageDiv;
-}
-
-chatForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const message = chatInput.value.trim();
-  if (message) sendMessage(message);
-});
-
-clearBtn.addEventListener("click", () => {
-  chatBox.innerHTML = "";
-  addMessage("bot", "Histórico limpo. Como posso te ajudar agora?");
-});
