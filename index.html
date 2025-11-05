@@ -3,105 +3,248 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edward IA - Assistente de Luxo</title>
+  <title>Edward IA - Seu assistente virtual inteligente</title>
+  <meta name="description" content="Edward IA é um assistente virtual moderno e eficiente que responde com clareza, rapidez e precisão. Experimente inteligência artificial em tempo real." />
+  <meta name="keywords" content="Edward IA, Inteligência Artificial, Chatbot, Assistente Virtual, OpenAI, IA Brasil, ChatGPT, Tecnologia" />
+  <meta name="author" content="Edward Henrique" />
+
   <style>
+    /* === ESTILO GERAL === */
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #fff8e1, #fdf6ec);
-      color: #333;
-      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #0a2342;
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
-      background-color: #d4af37;
-      color: #fff;
+      background-color: #0a2342;
+      color: white;
       text-align: center;
-      padding: 20px 10px;
+      padding: 20px;
       font-size: 1.8rem;
-      font-weight: bold;
+      font-weight: 700;
       letter-spacing: 1px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 10px;
+      gap: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+      color: #0a2342;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #0057ff;
     }
 
     main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .intro h1 {
+      font-size: 2rem;
+      color: #0a2342;
+      margin-bottom: 10px;
+    }
+
+    .intro p {
+      font-size: 1.1rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* CHATBOX */
+    .chat-container {
+      background-color: #f7f9fc;
+      border: 1px solid #ccc;
+      border-radius: 10px;
       padding: 20px;
-      max-width: 900px;
-      margin: auto;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 20px;
     }
 
     .chat-box {
-      flex: 1;
-      width: 100%;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      padding: 20px;
+      height: 300px;
       overflow-y: auto;
-      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+    }
+
+    .chat-message {
+      margin: 8px 0;
+    }
+
+    .chat-message strong {
+      color: #0a2342;
     }
 
     .input-area {
       display: flex;
-      width: 100%;
       gap: 10px;
     }
 
     .input-area input {
       flex: 1;
-      padding: 12px;
-      border: 2px solid #d4af37;
-      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
       outline: none;
       font-size: 1rem;
     }
 
     .input-area button {
-      background-color: #d4af37;
+      background-color: #0a2342;
       color: #fff;
       border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 10px 20px;
+      border-radius: 6px;
       cursor: pointer;
       transition: 0.3s;
-      font-weight: 600;
     }
 
     .input-area button:hover {
-      background-color: #b5942f;
-      transform: translateY(-2px);
+      background-color: #003580;
     }
 
+    /* SEÇÕES INFORMATIVAS */
+    .section {
+      margin-top: 50px;
+    }
+
+    .section h2 {
+      color: #0a2342;
+      margin-bottom: 15px;
+    }
+
+    .section p {
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* RODAPÉ */
     footer {
+      background-color: #0a2342;
+      color: white;
       text-align: center;
+      padding: 20px;
       font-size: 0.9rem;
-      color: #555;
-      padding: 10px;
+      border-top: 4px solid #0057ff;
+    }
+
+    footer a {
+      color: #aad4ff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      .intro h1 {
+        font-size: 1.5rem;
+      }
+      .input-area {
+        flex-direction: column;
+      }
+      .input-area button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <header>💎 Edward IA</header>
+
+  <header>Edward IA</header>
+
+  <nav>
+    <a href="#">Início</a>
+    <a href="#">Sobre</a>
+    <a href="#">Contato</a>
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Termos de Uso</a>
+  </nav>
 
   <main>
-    <div class="chat-box" id="chatBox">
-      <div><strong>Edward IA:</strong> Seja bem-vindo! Sou seu assistente de luxo — rápido, preciso e com estilo.</div>
+    <section class="intro">
+      <h1>Seu assistente virtual inteligente</h1>
+      <p>
+        O Edward IA é um assistente desenvolvido com tecnologia de ponta em inteligência artificial. 
+        Ele entende suas perguntas, analisa contextos e oferece respostas precisas, rápidas e naturais. 
+        Feito para quem busca praticidade, produtividade e um toque de inovação.
+      </p>
+    </section>
+
+    <div class="chat-container">
+      <div class="chat-box" id="chatBox">
+        <div class="chat-message"><strong>Edward IA:</strong> Olá! Como posso ajudar você hoje?</div>
+      </div>
+
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Digite sua pergunta..." />
+        <button onclick="sendMessage()">Enviar</button>
+      </div>
     </div>
 
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Digite sua pergunta..." />
-      <button onclick="sendMessage()">Enviar</button>
-    </div>
+    <section class="section">
+      <h2>Sobre o Edward IA</h2>
+      <p>
+        Criado para ser mais do que um simples chatbot, o Edward IA é um assistente de conversas e aprendizado contínuo.
+        Ele pode ajudar em estudos, negócios, tecnologia, curiosidades, marketing, e muito mais.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Política e Transparência</h2>
+      <p>
+        O Edward IA respeita sua privacidade. Nenhuma informação pessoal é coletada sem consentimento, 
+        e todo o conteúdo segue boas práticas para publicidade e SEO, atendendo aos padrões exigidos pelo Google AdSense.
+      </p>
+    </section>
+
+    <!-- ESPAÇO PARA ANÚNCIO -->
+    <section class="section" id="ads-section">
+      <h2>Anúncios</h2>
+      <p>Espaço reservado para anúncios do Google (AdSense).</p>
+      <!-- Aqui o Google Ads irá inserir automaticamente seus blocos -->
+    </section>
+
   </main>
 
-  <footer>© 2025 Edward IA — Todos os direitos reservados.</footer>
+  <footer>
+    <a href="#">Contato</a> |
+    <a href="#">Termos</a> |
+    <a href="#">Privacidade</a>
+    <br><br>
+    © 2025 Edward IA — Todos os direitos reservados.
+  </footer>
 
   <script src="main.js"></script>
 </body>
