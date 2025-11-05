@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edward IA — Assistente Inteligente</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <h1>Edward IA</h1>
+    </div>
+    <nav class="toplinks">
+      <a href="/contact.html">Contato</a>
+      <a href="/privacy.html">Privacidade</a>
+      <button id="copy-all" title="Copiar toda conversa">Copiar conversa</button>
+      <a class="platform-link" href="https://example.com" target="_blank" rel="noopener">Criar bot / Plataforma</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="chat" class="chat-area" aria-live="polite"></section>
+
+    <form id="form" class="composer" autocomplete="off">
+      <input id="input" name="prompt" placeholder="Digite sua pergunta..." aria-label="Pergunta" />
+      <button id="send" type="submit">Enviar</button>
+    </form>
+
+    <div class="controls">
+      <label for="lang">Idioma preferido:</label>
+      <select id="lang">
+        <option value="auto">Detectar automaticamente</option>
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+      <button id="download">Baixar conversa (.txt)</button>
+    </div>
+  </main>
+
+  <script src="/script.js" defer></script>
+</body>
+</html>
