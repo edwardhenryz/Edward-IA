@@ -1,30 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contato - Edward IA</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contato — Edward IA</title>
   <style>
-    body {
-      background: white;
-      color: #222;
-      font-family: "Poppins", sans-serif;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    h1 {
-      color: goldenrod;
-    }
-    a {
-      color: goldenrod;
-      text-decoration: none;
-    }
+    body{font-family:Inter,Arial;background:#fff;color:#111;padding:24px}
+    .box{max-width:720px;margin:24px auto;padding:18px;border-radius:10px;border:1px solid #efe6d0;background:#fff}
+    label{display:block;margin-top:8px;font-weight:600}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;margin-top:6px}
+    button{margin-top:10px;padding:10px 14px;border-radius:8px;background:#c69c39;border:none;color:#fff}
+    a{color:#c69c39;text-decoration:none}
   </style>
 </head>
 <body>
-  <h1>Contato</h1>
-  <p>Entre em contato com o desenvolvedor do Edward IA:</p>
-  <p><strong>Email:</strong> edwardhenryz@gmail.com</p>
-  <p><a href="index.html">← Voltar</a></p>
+  <div class="box">
+    <h1>Contato</h1>
+    <p>Se você precisa de ajuda, parcerias ou quer reportar algo, envie a mensagem abaixo.</p>
+
+    <form id="contactForm" onsubmit="return false">
+      <label>Nome</label>
+      <input id="nome" required />
+      <label>E-mail</label>
+      <input id="email" type="email" required />
+      <label>Mensagem</label>
+      <textarea id="mensagem" rows="6" required></textarea>
+      <button id="send">Enviar</button>
+    </form>
+
+    <p style="margin-top:12px">Voltar para <a href="index.html">Edward IA</a></p>
+  </div>
+
+  <script>
+    document.getElementById('send').addEventListener('click', ()=>{
+      alert('Obrigado — sua mensagem foi recebida (simulada).');
+      document.getElementById('contactForm').reset();
+    });
+  </script>
 </body>
 </html>
